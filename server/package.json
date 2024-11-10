@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "comp": "tsc",
-    "dev": "concurrently \" tsc -w \" \"nodemon ./dist/index.js\""
+    "server": "concurrently \" tsc -w \" \"nodemon ./dist/index.js\""
   },
   "dependencies": {
     "concurrently": "^9.1.0",

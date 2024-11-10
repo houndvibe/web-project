@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("This is SERVER");
 });
 
-app.get("/users", (req, res) => {
+app.get("/api/users", (req, res) => {
   res.send({ usersTest: true, signal: "good" });
 });
 
