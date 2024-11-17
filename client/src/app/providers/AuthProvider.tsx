@@ -1,9 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import store from "../../app/globalStore/store";
 import Header from "../../widgets/Header/ui";
+import store from "../globalStore/store";
+import { Navigate } from "react-router-dom";
 
-const AuthorisedRoutes = () => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authorized, setAuthorized] = useState(
     store.getState().user.authorized
   );
@@ -13,11 +13,11 @@ const AuthorisedRoutes = () => {
   }, []);
 
   return (
-    <>
+    <div className="App">
       {authorized ? <Header /> : <></>}
-      {authorized ? <Outlet /> : <Navigate to="/LogIn" />}
-    </>
+      {authorized ? <div>{children}</div> : <Navigate to={"/"} />}
+    </div>
   );
 };
 
-export default AuthorisedRoutes;
+export default AuthProvider;

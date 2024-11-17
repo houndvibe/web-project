@@ -1,18 +1,15 @@
-import { StrictMode } from "react";
-import { Provider } from "react-redux";
-import store from "./globalStore/store";
-import { CssBaseline } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
+import SettingsProvider from "./providers/SettingsProvider";
+import StoreProvider from "./providers/StoreProvider";
 
 const App = () => {
   return (
-    <StrictMode>
-      <CssBaseline />
-      <Provider store={store}>
+    <SettingsProvider>
+      <StoreProvider>
         <RouterProvider router={router} />
-      </Provider>
-    </StrictMode>
+      </StoreProvider>
+    </SettingsProvider>
   );
 };
 

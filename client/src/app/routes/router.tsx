@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import HomePage from "../../pages/HomePage/HomePage";
-import AuthorisedRoutes from "../../pages/AuthorisedRoutes/AuthorisedRoutes";
 import LogInPage from "../../pages/LogIn/LogIn";
+import AuthorisedRoutes from "../../pages/AuthorisedRoutes/AuthorisedRoutes";
 
 const router = createBrowserRouter([
   {
