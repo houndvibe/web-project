@@ -5,13 +5,18 @@ export interface UserSlice {
 }
 
 const initialState: UserSlice = {
-  authorized: true,
+  authorized: false,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setAutorized(state) {
+      state.authorized = true;
+    },
+  },
 });
 
+export const { setAutorized } = userSlice.actions;
 export default userSlice.reducer;

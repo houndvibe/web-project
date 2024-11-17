@@ -4,10 +4,12 @@ import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router.tsx";
 import store from "./globalStore/store.ts";
+import CssBaseline from "@mui/material/CssBaseline";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
+      <CssBaseline />
       <RouterProvider router={router} />
     </Provider>
   </StrictMode>
