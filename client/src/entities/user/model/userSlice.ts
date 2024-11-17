@@ -5,18 +5,21 @@ export interface UserSlice {
 }
 
 const initialState: UserSlice = {
-  authorized: false,
+  authorized: localStorage.getItem("auth") ? true : false,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setAutorized(state) {
+    signIn(state) {
       state.authorized = true;
+    },
+    signOut(state) {
+      state.authorized = false;
     },
   },
 });
 
-export const { setAutorized } = userSlice.actions;
+export const { signIn, signOut } = userSlice.actions;
 export default userSlice.reducer;

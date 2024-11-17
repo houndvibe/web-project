@@ -1,15 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useTypedSelector } from "../../app/globalStore/typed-hooks";
+import { useEffect, useState } from "react";
+import store from "../../app/globalStore/store";
 
 const AuthorisedRoutes = () => {
-  const isAuthorized = useTypedSelector((state) => state.user).authorized;
-  const localStorageAuth = localStorage.getItem("auth");
-
-  return isAuthorized || localStorageAuth ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/LogIn" />
+  const [authorized, setAuthorized] = useState(
+    store.getState().user.authorized
   );
+        
+  useEffect(() => {
+    store.subscribe(() => setAuthorized(store.getState().user.authorized));
+  }, []);
+
+  return authorized ? <Outlet /> : <Navigate to="/LogIn" />;
 };
 
 export default AuthorisedRoutes;

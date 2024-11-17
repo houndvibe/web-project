@@ -1,6 +1,6 @@
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { useState } from "react";
-import { setAutorized } from "../../entities/user/model/userSlice";
+import { signIn } from "../../entities/user/model/userSlice";
 import { useTypedDispatch } from "../../app/globalStore/typed-hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const LogInPage = () => {
   };
 
   const handleOk = () => {
-    dispatch(setAutorized());
+    dispatch(signIn());
     localStorage.setItem("auth", "true");
     navigate("/");
   };
@@ -28,19 +28,16 @@ const LogInPage = () => {
         alignItems="center"
         minHeight="100vh"
       >
-        {/* Заголовок страницы */}
         <Typography variant="h1" gutterBottom>
-          -PASS BOY-
+          {"-PASS BOY-"}
         </Typography>
 
         <Typography variant="h4" gutterBottom>
           {signInMode ? "Sign In:" : "Sign Up:"}
         </Typography>
 
-        {/* Поле для ввода логина */}
         <TextField label="Name" variant="outlined" margin="normal" fullWidth />
 
-        {/* Поле для ввода пароля */}
         <TextField
           label="Password"
           type="password"
@@ -61,7 +58,6 @@ const LogInPage = () => {
           <Typography variant="body1">Or:</Typography>
         </Box>
 
-        {/* Кнопка регистрации */}
         <Button
           onClick={handleChangeMode}
           variant="contained"
