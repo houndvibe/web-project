@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Artem Lipatov",
   "license": "MIT",
+  "type": "module" ,
   "scripts": {
     "comp": "tsc",
     "server": "concurrently \" tsc -w \" \"nodemon ./dist/index.js\""
