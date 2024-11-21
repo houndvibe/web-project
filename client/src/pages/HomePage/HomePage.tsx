@@ -55,7 +55,7 @@ const HomePage = () => {
       <List>
         {filteredSites.map((site, index) => (
           <React.Fragment key={index}>
-            <ListItem button>
+            <ListItem>
               <ListItemIcon>{site.icon}</ListItemIcon>
               <ListItemText primary={site.label} />
             </ListItem>

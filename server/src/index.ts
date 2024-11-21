@@ -1,22 +1,29 @@
+import "dotenv/config";
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
-
-dotenv.config();
+import router from "./routes/index.js";
+import sequelize from "./database/database.js";
+import errorHandler from "./middleware/errorHandlingMiddleware.js";
+const PORT = process.env.PORT || 7000;
 
 const app = express();
-const PORT = process.env.PORT ?? 3000;
 
 app.use(cors());
+app.use(express.json());
+app.use("/api", router);
+app.use(errorHandler);
 
-app.get("/", (req, res) => {
-  res.send("This is SERVER");
-});
+const start = async () => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync();
 
-app.get("/api/users", (req, res) => {
-  res.send({ usersTest: true, signal: "good" });
-});
+    app.listen(PORT, () =>
+      console.log(`-----server starts at port ${PORT}-----`)
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`Sewrver listening on port ${PORT}`);
-});
+start();
