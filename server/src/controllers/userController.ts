@@ -3,42 +3,42 @@ import bcrypt from "bcrypt";
 import ApiError from "../error/ApiError.js";
 import jwt from "jsonwebtoken";
 
-const generateJwt = (id, email, role): string => {
-  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
+const generateJwt = (id, username, role): string => {
+  return jwt.sign({ id, username, role }, process.env.SECRET_KEY, {
     expiresIn: "24h",
   });
 };
 
 class UserController {
   async registration(req, res, next): Promise<string> {
-    const { email, password, role } = req.body;
+    const { username, password, role } = req.body;
 
-    if (!email || !password) {
-      return next(ApiError.badRequest("некоректный email или пароль"));
+    if (!username || !password) {
+      return next(ApiError.badRequest("некоректный username или пароль"));
     }
 
-    const condidate = await User.findOne({ where: { email } });
+    const condidate = await User.findOne({ where: { username } });
     if (condidate) {
       return next(
-        ApiError.badRequest("Пользователь с таким email уже существует ")
+        ApiError.badRequest("Пользователь с таким username уже существует ")
       );
     }
 
     const hashedPassword: string = await bcrypt.hash(password, 5);
     const user = await User.create({
-      email,
+      username,
       role,
       password: hashedPassword,
     });
-    const token: string = generateJwt(user.id, user.email, user.role);
+    const token: string = generateJwt(user.id, user.username, user.role);
 
     return res.json({ token });
   }
 
   async login(req, res, next): Promise<string> {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { username } });
     if (!user) {
       return next(ApiError.internal("Пользователь с таким именем не найден"));
     }
@@ -52,14 +52,14 @@ class UserController {
       return next(ApiError.internal("Указа не верный пароль"));
     }
 
-    const token: string = generateJwt(user.id, user.email, user.role);
+    const token: string = generateJwt(user.id, user.username, user.role);
     return res.json({ token, role: user.role });
   }
 
   async checkAuth(req, res, next) {
-    const token = generateJwt(req.user.id, req.user.email, req.user.role);
+    const token = generateJwt(req.user.id, req.user.username, req.user.role);
 
-    const user = await User.findOne({ where: { email: req.user.email } });
+    const user = await User.findOne({ where: { username: req.user.username } });
 
     if (!user) {
       return next(ApiError.internal("Юзер был удален из базы"));

@@ -9,15 +9,20 @@ export const apiSlice = createApi({
     getUsers: builder.query({
       query: () => "/users",
     }),
-    addUser: builder.mutation({
-      query: (newUser) => ({
-        url: "/users",
+
+    register: builder.mutation({
+      query: (arg) => ({
+        url: "/user/registration",
         method: "POST",
-        body: newUser,
+        body: {
+          password: arg.password,
+          username: arg.username,
+          role: arg.role,
+        },
       }),
     }),
   }),
 });
 
-export const { useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation } =
+export const { useGetUsersQuery, useLazyGetUsersQuery, useRegisterMutation } =
   apiSlice;

@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
 
 export class User extends Model {
   declare id: string;
-  declare email: string;
+  declare username: string;
   declare password: string;
   declare role: CreationOptional<"USER" | "ADMIN">;
 }
@@ -21,7 +21,7 @@ export class User extends Model {
 User.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    email: { type: DataTypes.STRING, unique: true, allowNull: false },
+    username: { type: DataTypes.STRING, unique: true, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
     role: { type: DataTypes.STRING, defaultValue: "USER" },
   },

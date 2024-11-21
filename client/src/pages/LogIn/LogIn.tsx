@@ -3,20 +3,27 @@ import { useState } from "react";
 import { signIn } from "../../entities/user/model/userSlice";
 import { useTypedDispatch } from "../../app/globalStore/typed-hooks";
 import { useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../app/globalStore/apiSlice";
 
 const LogInPage = () => {
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
   const [signInMode, setSignInMode] = useState<boolean>(true);
 
+  const [register] = useRegisterMutation();
+
   const handleChangeMode = () => {
     setSignInMode(!signInMode);
   };
 
   const handleOk = () => {
-    dispatch(signIn());
-    localStorage.setItem("auth", "true");
-    navigate("/");
+    if (signInMode) {
+      dispatch(signIn());
+      localStorage.setItem("auth", "true");
+      navigate("/");
+    } else {
+      register({ role: "ADMIN", username: "Админ", password: "123" });
+    }
   };
 
   return (
